@@ -67,12 +67,12 @@ class FakeUnsplash implements Unsplash {
       ''';
 
   @override
-  Future<SearchPhotosResponse> searchPhotos(
-      {String query,
+  Future<SearchPhotosResponse?> searchPhotos(
+      {String? query,
       num page = 1,
       num perPage = 10,
       List<num> collections = const [],
-      SearchPhotosOrientation orientation}) async {
+      SearchPhotosOrientation? orientation}) async {
     return SearchPhotosResponse.fromJson(searchPhotosResponse);
   }
 
@@ -85,7 +85,8 @@ class FakeUnsplash implements Unsplash {
 const fabKey = Key('fab');
 
 class PhotoSearchModelTester extends StatelessWidget {
-  const PhotoSearchModelTester(this.query);
+  const PhotoSearchModelTester({required this.query, Key? key})
+      : super(key: key);
   final String query;
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ void main() {
       final unsplashSearches = PhotoSearchModel(FakeUnsplash());
       final testWidget = ChangeNotifierProvider<PhotoSearchModel>(
         create: (context) => unsplashSearches,
-        child: const PhotoSearchModelTester('clouds'),
+        child: const PhotoSearchModelTester(query: 'clouds'),
       );
       await tester.pumpWidget(testWidget);
       expect(unsplashSearches.entries.length, 0);
@@ -120,7 +121,7 @@ void main() {
       final unsplashSearches = PhotoSearchModel(FakeUnsplash());
       final testWidget = ChangeNotifierProvider<PhotoSearchModel>(
         create: (context) => unsplashSearches,
-        child: const PhotoSearchModelTester('clouds'),
+        child: const PhotoSearchModelTester(query: 'clouds'),
       );
       await tester.pumpWidget(testWidget);
       await tester.tap(find.byKey(fabKey));

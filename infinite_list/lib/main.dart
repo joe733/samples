@@ -9,15 +9,17 @@ import 'src/catalog.dart';
 import 'src/item_tile.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Catalog>(
       create: (context) => Catalog(),
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Infinite List Sample',
         home: MyHomePage(),
       ),
@@ -26,11 +28,13 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Infinite List Sample'),
+        title: const Text('Infinite List Sample'),
       ),
       body: Selector<Catalog, int?>(
         // Selector is a widget from package:provider. It allows us to listen
@@ -54,7 +58,7 @@ class MyHomePage extends StatelessWidget {
             var item = catalog.getByIndex(index);
 
             if (item.isLoading) {
-              return LoadingItemTile();
+              return const LoadingItemTile();
             }
 
             return ItemTile(item: item);

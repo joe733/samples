@@ -5,12 +5,10 @@
 import 'dart:io';
 
 import 'package:file_selector/file_selector.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:logging/logging.dart';
 import 'package:menubar/menubar.dart' as menubar;
-import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 
 import 'src/model/photo_search_model.dart';
@@ -39,12 +37,14 @@ void main() {
       create: (context) => PhotoSearchModel(
         Unsplash(accessKey: unsplashAccessKey),
       ),
-      child: UnsplashSearchApp(),
+      child: const UnsplashSearchApp(),
     ),
   );
 }
 
 class UnsplashSearchApp extends StatelessWidget {
+  const UnsplashSearchApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,7 +58,7 @@ class UnsplashSearchApp extends StatelessWidget {
 }
 
 class UnsplashHomePage extends StatelessWidget {
-  const UnsplashHomePage({@required this.title});
+  const UnsplashHomePage({required this.title, Key? key}) : super(key: key);
   final String title;
 
   @override
@@ -72,7 +72,7 @@ class UnsplashHomePage extends StatelessWidget {
             showDialog<void>(
               context: context,
               builder: (context) =>
-                  PhotoSearchDialog(photoSearchModel.addSearch),
+                  PhotoSearchDialog(callback: photoSearchModel.addSearch),
             );
           },
         ),
@@ -83,7 +83,7 @@ class UnsplashHomePage extends StatelessWidget {
           onClicked: () {
             showDialog<void>(
               context: context,
-              builder: (context) => PolicyDialog(),
+              builder: (context) => const PolicyDialog(),
             );
           },
         ),
@@ -111,7 +111,7 @@ class UnsplashHomePage extends StatelessWidget {
               secondChild: Center(
                 child: photoSearchModel.selectedPhoto != null
                     ? PhotoDetails(
-                        photo: photoSearchModel.selectedPhoto,
+                        photo: photoSearchModel.selectedPhoto!,
                         onPhotoSave: (photo) async {
                           final path = await getSavePath(
                             suggestedName: '${photo.id}.jpg',
@@ -141,10 +141,11 @@ class UnsplashHomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog<void>(
           context: context,
-          builder: (context) => PhotoSearchDialog(photoSearchModel.addSearch),
+          builder: (context) =>
+              PhotoSearchDialog(callback: photoSearchModel.addSearch),
         ),
         tooltip: 'Search for a photo',
-        child: Icon(Icons.search),
+        child: const Icon(Icons.search),
       ),
     );
   }
@@ -165,7 +166,7 @@ class UnsplashHomePage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Photo by ${photo.user.name}',
+                      'Photo by ${photo.user!.name}',
                     ),
                   ),
                 ),

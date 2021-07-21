@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 
 class RepeatingAnimationDemo extends StatefulWidget {
+  const RepeatingAnimationDemo({Key? key}) : super(key: key);
   static String routeName = '/misc/repeating_animation';
 
   @override
@@ -33,7 +34,7 @@ class RepeatingAnimationDemoState extends State<RepeatingAnimationDemo>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Repeating Animation')),
+      appBar: AppBar(title: const Text('Repeating Animation')),
       body: Center(
         child: AnimatedBuilder(
           animation: _borderRadius,

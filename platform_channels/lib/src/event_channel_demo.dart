@@ -19,28 +19,28 @@ class EventChannelDemo extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme.headline5;
     return Scaffold(
       appBar: AppBar(
-        title: Text('EventChannel Demo'),
+        title: const Text('EventChannel Demo'),
       ),
       body: Center(
         child: StreamBuilder<AccelerometerReadings>(
           stream: Accelerometer.readings,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text((snapshot.error as PlatformException).message);
+              return Text((snapshot.error as PlatformException).message!);
             } else if (snapshot.hasData) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'x axis: ' + snapshot.data.x.toStringAsFixed(3),
+                    'x axis: ' + snapshot.data!.x.toStringAsFixed(3),
                     style: textStyle,
                   ),
                   Text(
-                    'y axis: ' + snapshot.data.y.toStringAsFixed(3),
+                    'y axis: ' + snapshot.data!.y.toStringAsFixed(3),
                     style: textStyle,
                   ),
                   Text(
-                    'z axis: ' + snapshot.data.z.toStringAsFixed(3),
+                    'z axis: ' + snapshot.data!.z.toStringAsFixed(3),
                     style: textStyle,
                   )
                 ],

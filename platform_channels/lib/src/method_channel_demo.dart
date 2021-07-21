@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:platform_channels/src/counter_method_channel.dart';
 
 /// The widget demonstrates how to use [MethodChannel] to invoke platform methods.
@@ -29,7 +30,7 @@ class _MethodChannelDemoState extends State<MethodChannelDemo> {
             'Value of count is $count',
             style: Theme.of(context).textTheme.headline5,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Row(
@@ -45,12 +46,12 @@ class _MethodChannelDemoState extends State<MethodChannelDemo> {
                   } catch (error) {
                     showErrorMessage(
                       context,
-                      error.message as String,
+                      (error as PlatformException).message!,
                     );
                   }
                 },
-                icon: Icon(Icons.add),
-                label: Text('Increment'),
+                icon: const Icon(Icons.add),
+                label: const Text('Increment'),
               ),
 
               // Whenever users press the ElevatedButton, it invokes
@@ -63,12 +64,12 @@ class _MethodChannelDemoState extends State<MethodChannelDemo> {
                   } catch (error) {
                     showErrorMessage(
                       context,
-                      error.message as String,
+                      (error as PlatformException).message!,
                     );
                   }
                 },
-                icon: Icon(Icons.remove),
-                label: Text('Decrement'),
+                icon: const Icon(Icons.remove),
+                label: const Text('Decrement'),
               )
             ],
           )
